@@ -1,0 +1,12 @@
+{
+  "name": "crm-dashboard-supabase",
+  "version": "1.0.0",
+  "description": "CRM Dashboard with Supabase integration",
+  "main": "index.js",
+  "scripts": {
+    "dev": "http-server -p 3000 -c-1 --cors -a localhost"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}

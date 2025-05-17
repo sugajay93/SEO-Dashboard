@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM Dashboard - Mode Démo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard">
+    <header>
+      <div class="logo">CRM Dashboard</div>
+      <div class="user-info" id="user-profile">
+        <span id="user-name">Chargement...</span>
+        <div class="user-avatar" id="user-avatar">?</div>
+      </div>
+    </header>
+    
+    <div class="tabs">
+      <div class="tab active" data-tab="dashboard">Tableau de bord</div>
+      <div class="tab" data-tab="clients">Clients</div>
+      <div class="tab" data-tab="settings">Paramètres</div>
+    </div>
+    
+    <div id="dashboard-tab" class="tab-content active">
+      <div class="stats" id="stats-container">
+        <div class="stat-card skeleton" id="clients-stat">
+          <div class="stat-icon">👥</div>
+          <div class="stat-info">
+            <h3>-</h3>
+            <p>Clients actifs</p>
+          </div>
+        </div>
+        
+        <div class="stat-card skeleton" id="keywords-stat">
+          <div class="stat-icon">🔍</div>
+          <div class="stat-info">
+            <h3>-</h3>
+            <p>Mots-clés suivis</p>
+          </div>
+        </div>
+        
+        <div class="stat-card skeleton" id="positions-stat">
+          <div class="stat-icon">🏆</div>
+          <div class="stat-info">
+            <h3>-</h3>
+            <p>Positions Top 10</p>
+          </div>
+        </div>
+        
+        <div class="stat-card skeleton" id="backlinks-stat">
+          <div class="stat-icon">🔗</div>
+          <div class="stat-info">
+            <h3>-</h3>
+            <p>Backlinks</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="main-content">
+        <div class="chart-container">
+          <div class="chart-header">
+            <h2>Évolution SEO</h2>
+            <select id="chart-period">
+              <option value="30">30 derniers jours</option>
+              <option value="90">90 derniers jours</option>
+              <option value="365">1 an</option>
+            </select>
+          </div>
+          <div class="chart-placeholder" id="chart-area">
+            <div class="skeleton-chart"></div>
+          </div>
+        </div>
+        
+        <div class="clients-list">
+          <div class="list-header">
+            <h2>Clients</h2>
+            <button id="add-client-btn" class="add-button">+</button>
+          </div>
+          
+          <div id="clients-list-container">
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="clients-tab" class="tab-content">
+      <h2>Liste complète des clients</h2>
+      <p style="margin: 20px 0;">Cette section contient la liste complète des clients avec toutes leurs informations et projets associés.</p>
+      
+      <div class="stats" id="client-stats">
+        <div class="stat-card skeleton">
+          <div class="stat-icon" style="background-color: rgba(40, 167, 69, 0.1); color: #28a745;">✓</div>
+          <div class="stat-info">
+            <h3>-</h3>
+            <p>Clients actifs</p>
+          </div>
+        </div>
+        
+        <div class="stat-card skeleton">
+          <div class="stat-icon" style="background-color: rgba(255, 193, 7, 0.1); color: #ffc107;">⌛</div>
+          <div class="stat-info">
+            <h3>-</h3>
+            <p>Clients en attente</p>
+          </div>
+        </div>
+        
+        <div class="stat-card skeleton">
+          <div class="stat-icon" style="background-color: rgba(220, 53, 69, 0.1); color: #dc3545;">✕</div>
+          <div class="stat-info">
+            <h3>-</h3>
+            <p>Clients inactifs</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="search-container">
+        <input type="text" id="client-search" placeholder="Rechercher un client...">
+      </div>
+      
+      <div class="clients-table-container">
+        <table class="clients-table">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Statut</th>
+              <th>Date d'ajout</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clients-table-body">
+            <!-- Content will be added by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div id="settings-tab" class="tab-content">
+      <h2>Paramètres du tableau de bord</h2>
+      <p style="margin: 20px 0;">Configurez votre tableau de bord et votre compte utilisateur.</p>
+      
+      <div class="settings-card">
+        <h3>Préférences utilisateur</h3>
+        <div class="form-group">
+          <label>Nom d'utilisateur</label>
+          <input type="text" id="settings-username" value="">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="settings-email" value="" disabled>
+        </div>
+        <div class="form-group">
+          <label>Langue</label>
+          <select id="settings-language">
+            <option value="fr">Français</option>
+            <option value="en">Anglais</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="save-settings">Enregistrer</button>
+        
+        <div class="logout-container">
+          <button class="btn btn-secondary" id="logout-btn">Déconnexion</button>
+        </div>
+      </div>
+      
+      <div class="settings-card">
+        <h3>Base de données</h3>
+        <div class="form-group">
+          <label>Statut de la connexion</label>
+          <div id="db-status" class="db-status-demo">Mode démo actif</div>
+        </div>
+        <div class="form-group">
+          <label>URL Supabase</label>
+          <input type="text" id="supabase-url" value="Mode démo (Supabase non disponible)" disabled>
+        </div>
+        <p class="note" style="margin-top: 15px; color: #dc3545;">
+          <strong>Note importante:</strong> La connexion à Supabase n'est pas disponible dans l'environnement Bind. 
+          Pour utiliser Supabase, exécutez cette application sur votre machine locale.
+        </p>
+        <div class="mode-buttons">
+          <button class="btn btn-primary" id="test-connection">Vérifier statut</button>
+          <button class="btn btn-secondary" id="force-demo-mode">Mode démo</button>
+          <button class="btn btn-info" id="force-production-mode" style="background-color: #17a2b8; color: white;">Mode production</button>
+        </div>
+      </div>
+      
+      <div class="settings-card">
+        <h3>Aide & Support</h3>
+        <p>Mode démonstration actuellement actif:</p>
+        <ul>
+          <li>Toutes les données sont stockées localement dans le navigateur</li>
+          <li>Les modifications seront perdues lors de l'actualisation de la page</li>
+          <li>Vous pouvez ajouter, modifier et supprimer des clients pour tester les fonctionnalités</li>
+        </ul>
+        <p class="note" style="margin-top: 15px; font-style: italic; color: #6c757d;">
+          Pour connecter ce CRM à une base de données Supabase réelle, vous devez exécuter l'application sur votre propre serveur.
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Client Modal -->
+  <div class="modal" id="client-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="client-modal-title">Ajouter un client</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Nom du client*</label>
+          <input type="text" id="client-name" required>
+        </div>
+        <div class="form-group">
+          <label>Email*</label>
+          <input type="email" id="client-email" required>
+        </div>
+        <div class="form-group">
+          <label>Statut</label>
+          <select id="client-status">
+            <option value="active">Actif</option>
+            <option value="pending">En attente</option>
+            <option value="inactive">Inactif</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" id="client-phone">
+        </div>
+        <div class="form-group">
+          <label>Note</label>
+          <textarea id="client-notes"></textarea>
+        </div>
+        <input type="hidden" id="client-id" value="">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-client">Annuler</button>
+        <button class="btn btn-primary" id="save-client">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Client Detail Modal -->
+  <div class="modal" id="client-detail-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="detail-client-name">Détails du client</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="client-details-content" class="client-details">
+          <!-- Content will be added by JS -->
+          <div class="skeleton-detail"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="delete-client">Supprimer</button>
+        <button class="btn btn-secondary" id="close-detail">Fermer</button>
+        <button class="btn btn-primary" id="edit-client">Modifier</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast Notifications -->
+  <div id="toast-container"></div>
+  
+  <!-- Loading Overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

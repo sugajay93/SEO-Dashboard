@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String?
+  role          UserRole  @default(CLIENT)
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  clients       Client[]
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+}
+
+model Client {
+  id             String      @id @default(cuid())
+  name           String
+  domain         String
+  email          String      @unique
+  serviceType    String
+  status         ClientStatus
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  userId         String?
+  user           User?       @relation(fields: [userId], references: [id])
+  seoPositions   SEOPosition[]
+  backlinks      Backlink[]
+  kpiWebs        KPIWeb[]
+  documents      Document[]
+  comments       Comment[]
+}
+
+enum ClientStatus {
+  ACTIVE
+  INACTIVE
+  PROSPECT
+}
+
+model SEOPosition {
+  id               String   @id @default(cuid())
+  reportDate       DateTime
+  keyword          String
+  targetUrl        String
+  position         Int
+  previousPosition Int?
+  volume           Int?
+  variation        Int?
+  clientId         String
+  client           Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Backlink {
+  id         String       @id @default(cuid())
+  date       DateTime
+  sourceUrl  String
+  anchor     String
+  targetUrl  String
+  type       BacklinkType
+  price      Float?
+  clientId   String
+  client     Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+enum BacklinkType {
+  SPONSORED
+  DIRECTORY
+  GUEST_POST
+  NATURAL
+  OTHER
+}
+
+model KPIWeb {
+  id                String   @id @default(cuid())
+  date              DateTime
+  sessions          Int
+  users             Int
+  pageViews         Int
+  conversions       Int
+  sourceOrMedium    String?
+  clientId          String
+  client            Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Document {
+  id        String       @id @default(cuid())
+  date      DateTime
+  type      DocumentType
+  title     String
+  fileUrl   String?
+  linkUrl   String?
+  clientId  String
+  client    Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+enum DocumentType {
+  AUDIT
+  RECOMMENDATION
+  MONTHLY_REPORT
+  OTHER
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  month     DateTime
+  content   String
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
